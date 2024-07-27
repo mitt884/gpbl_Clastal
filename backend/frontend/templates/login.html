@@ -1,0 +1,70 @@
+{% extends 'base.html' %} {%load static%} {%block content%}
+<section class="h-auto">
+  <div class="container-fluid h-custom bg-info">
+    <div class="row d-flex justify-content-center align-items-center vh-100">
+      <div class="col-md-6 d-flex flex-column align-items-center text-center">
+        <!-- Flex row for image and Clastal text -->
+        <div
+          class="d-flex flex-row justify-content-center align-items-center mb-3"
+        >
+          <img
+            src="{% static 'assets/logo.png' %}"
+            class="img-fluid"
+            alt="Sample image"
+            style="max-width: 150px"
+          />
+          <h1 class="mb-0 font-monospace ms-3">Clastal</h1>
+        </div>
+        <!-- Paragraph in a separate row below the image and text -->
+        <p class="mb-0">あ な た の 知 り た い 、 教 え た い を か な え</p>
+      </div>
+      <div class="col-md-6 col-lg-6 col-xl-4 offset-xl-1">
+        <form method="POST" action="{% url 'login' %}">
+          {% csrf_token %}
+          <div class="divider d-flex align-items-center my-4"></div>
+          <!-- Email input -->
+          <div data-mdb-input-init class="form-outline mb-4">
+            <input
+              type="email"
+              name="email"
+              class="form-control form-control-lg"
+              placeholder="メールアドレス入力します："
+            />
+            <label class="form-label">メールアドレス</label>
+          </div>
+
+          <!-- Password input -->
+          <div data-mdb-input-init class="form-outline mb-3">
+            <input
+              type="password"
+              name="password"
+              class="form-control form-control-lg"
+              placeholder="パスワード入力します："
+            />
+            <label class="form-label" for="form3Example4">パスワード</label>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="#!" class="text-body">パスワードをお忘れですか？</a>
+          </div>
+
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg"
+              style="padding-left: 2.5rem; padding-right: 2.5rem"
+            >
+              ログイン
+            </button>
+            <p class="small fw-bold mt-2 pt-1 mb-0">
+              アカウントをお持ちでない場合
+              <a href="#!" class="link-danger">登録する</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%endblock%}

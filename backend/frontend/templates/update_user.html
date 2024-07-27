@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {%load static%} {%block content%}
+
+<section class="h-auto">
+  <div class="container-fluid h-custom bg-info">
+    <div class="row d-flex justify-content-center align-items-center vh-100">
+      <div class="col-md-6 d-flex flex-column align-items-center text-center">
+        <!-- Flex row for image and Clastal text -->
+        <div
+          class="d-flex flex-row justify-content-center align-items-center mb-3"
+        >
+          <img
+            src="{% static 'assets/logo.png' %}"
+            class="img-fluid"
+            alt="Sample image"
+            style="max-width: 150px"
+          />
+          <h1 class="mb-0 font-monospace ms-3">Clastal</h1>
+        </div>
+        <!-- Paragraph in a separate row below the image and text -->
+        <p class="mb-0">あ な た の 知 り た い 、 教 え た い を か な え</p>
+      </div>
+      <div class="col-md-6 col-lg-6 col-xl-4 offset-xl-1">
+        <h4 class="mb-5 text-uppercase">Information Update Form</h4>
+        <form method="POST" action="{% url 'update_user' %}">
+          {% csrf_token %}
+          <div class="form-group mb-4">
+            {{ user_form.username.label_tag }} {{ user_form.username }}
+          </div>
+          <div class="form-group mb-4">
+            {{ user_form.age.label_tag }} {{ user_form.age }}
+          </div>
+          <div class="form-group mb-4">
+            {{ user_form.email.label_tag }} {{ user_form.email }}
+          </div>
+          <div class="form-group mb-4">
+            {{ user_form.university.label_tag }} {{ user_form.university }}
+          </div>
+          <div class="d-flex justify-content-end">
+            <a href="{% url 'update_password' %}" class="btn btn-secondary">
+              Update Password
+            </a>
+            <button type="submit" class="btn btn-warning">
+              Update Profile
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%endblock%}
