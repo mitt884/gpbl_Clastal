@@ -4,20 +4,56 @@ from .forms import ShippingForm, PaymentForm
 from .models import ShippingAddress
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from orders.models import Order, OrderItems
+from accounts.models import User
+from courses.models import Courses
 # Create your views here.
+@login_required
 def process_order(request):
     if request.POST:
+        cart = Cart(request)
+        cart_courses = cart.get_courses
+        total = cart.cart_total()
+   
         #Get billing info from last page
         payment_form = PaymentForm(request.POST or None)
         #Get Shipping Session Data
         my_shipping = request.session.get('my_shipping')
         
+        full_name = my_shipping['shipping_full_name']
+        email = my_shipping['shipping_email']
+        
         #Get shipping address from the session info
         shipping_address = f"{my_shipping['shipping_address1']}\n{my_shipping['shipping_address2']}\n{my_shipping['shipping_city']}\n{my_shipping['shipping_state']}\n{my_shipping['shipping_zipcode']}\n{my_shipping['shipping_country']}\n"
         print(shipping_address)
+        amount_paid = total
         
+        #Create an Order
+        user = request.user
+        create_order = Order(user=user, full_name=full_name, email=email, shipping_address=shipping_address, amount_paid=amount_paid)
+        create_order.save()
         
+        #Add Order Items
+        order_id = create_order.pk
+        for course in cart_courses():
+            course_id = course.id
+            if course.is_sale:
+                price = course.sale_price
+            else:
+                price = course.price
+                
+            for key, value in cart.cart.items():
+                quantity = value.get('quantity', 1)
+                if int(key) == course_id:
+                    #create order item
+                    create_order_item = OrderItems(user=user,order_id=order_id, course_id=course_id, quantity=quantity, price=price)
+                    create_order_item.save()
         
+        #Delete the cart
+        for key in list(request.session.keys()):
+            if key == "session_key":
+                #Delete the key
+                del request.session[key]
         messages.success(request, "Order Placed")
         return redirect('home')
     else:

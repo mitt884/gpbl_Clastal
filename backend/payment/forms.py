@@ -20,5 +20,5 @@ class ShippingForm(forms.ModelForm):
 class PaymentForm(forms.Form):
     card_name = forms.CharField(label= "", widget=forms.TextInput(attrs={'class': 'form-control form-control-lg', 'placeholder': 'Cardholder Name'}), required=True)
     card_number = forms.CharField(label= "", widget=forms.TextInput(attrs={'class': 'form-control form-control-lg', 'placeholder': 'Card Number'}), required=True)
-    card_exp_date = forms.CharField(label= "", widget=forms.TextInput(attrs={'class': 'form-control form-control-lg', 'placeholder': 'Expiration'}), required=True)
+    card_exp_date = forms.DateField(label= "", widget=forms.DateInput(attrs={'class': 'form-control form-control-lg', 'placeholder': 'Expiration', 'type': 'date'}), required=True)
     card_cvv = forms.CharField(label= "", widget=forms.TextInput(attrs={'class': 'form-control form-control-lg', 'placeholder': 'CVV Code'}), required=True)
