@@ -3,12 +3,12 @@
   <div class="col-md-8 mb-4">
     <div class="card mb-4">
       <div class="card-header py-3">
-        <h5 class="mb-0">Biling details</h5>
+        <h5 class="mb-0">Shipping Details</h5>
       </div>
       <div class="card-body">
         <form method="POST" action="{% url 'billing_info' %}">
           {% csrf_token %} {{ shipping_form.as_p }}
-        </form>
+
       </div>
     </div>
   </div>
@@ -63,13 +63,14 @@
         >
 
         <button
-          type="button"
+          type="submit"
           data-mdb-button-init
           data-mdb-ripple-init
           class="btn btn-primary btn-lg"
         >
           Make purchase
         </button>
+      </form>
       </div>
     </div>
   </div>

@@ -67,7 +67,8 @@ def login_user(request):
 
             
             messages.success(request, ("ログインに成功しました"))
-            return redirect('home')
+            next_url = request.GET.get('next')
+            return redirect(next_url) if next_url else redirect('home')
         else:
             messages.success(request, ("無効な資格情報"))
             return redirect('login')

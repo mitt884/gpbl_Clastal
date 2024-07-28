@@ -21,6 +21,7 @@
       <div class="col-md-6 col-lg-6 col-xl-4 offset-xl-1">
         <form method="POST" action="{% url 'login' %}">
           {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.GET.next }}" />
           <div class="divider d-flex align-items-center my-4"></div>
           <!-- Email input -->
           <div data-mdb-input-init class="form-outline mb-4">

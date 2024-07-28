@@ -160,3 +160,9 @@ AUTHENTICATION_BACKENDS = [
     'accounts.authentication_backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+# Redirect to this URL after login if no `next` parameter is provided
+LOGIN_REDIRECT_URL = 'home' 
+
+# Redirect to this URL if not authenticated
+LOGIN_URL = 'login'
