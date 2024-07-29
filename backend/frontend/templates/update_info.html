@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<section class="h-auto">
+  <div class="container-fluid h-custom bg-info">
+    <div class="row d-flex justify-content-center align-items-center vh-100">
+        <!-- Billing Information Column -->
+        <div class="col-md-6 col-lg-6 col-xl-4 offset-xl-1">
+          <h4 class="mb-5 text-uppercase text-center">Billing Information</h4>
+          <form method="POST" action="{% url 'update_info' %}">
+            {% csrf_token %}
+            <div class="form-group mb-4">
+              {{ form.phone.label_tag }} {{ form.phone }}
+            </div>
+            <div class="form-group mb-4">
+              {{ form.address1.label_tag }} {{ form.address1 }}
+            </div>
+            <div class="form-group mb-4">
+              {{ form.address2.label_tag }} {{ form.address2 }}
+            </div>
+            <div class="form-group mb-4">
+              {{ form.city.label_tag }} {{ form.city }}
+            </div>
+            <div class="form-group mb-4">
+              {{ form.state.label_tag }} {{ form.state }}
+            </div>
+            <div class="form-group mb-4">
+              {{ form.zipcode.label_tag }} {{ form.zipcode }}
+            </div>
+            <div class="form-group mb-4">
+              {{ form.country.label_tag }} {{ form.country }}
+            </div>
+          </form>
+        </div>
+        <!-- Shipping Information Column -->
+        <div class="col-md-6 col-lg-6 col-xl-4 offset-xl-1">
+          <h4 class="mb-5 text-uppercase text-center">Shipping Information</h4>
+          <form method="POST" action="{% url 'update_info' %}">
+            {% csrf_token %} {{ shipping_form.as_p }}
+            <div class="d-flex justify-content-end mt-4">
+              <button type="submit" class="btn btn-warning">Update Info</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

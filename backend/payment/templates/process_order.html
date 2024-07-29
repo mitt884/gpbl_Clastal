@@ -1,0 +1,94 @@
+{%extends 'base.html' %} {% load static %} {%block content%}
+<div class="container-fluid gradient-custom">
+  <div class="row mt-3 mx-3" style="margin-top: 25px">
+    <div class="col-md-3">
+      <div style="margin-top: 50px; margin-left: 10px" class="text-center">
+        <i
+          id="animationDemo"
+          data-mdb-animation="slide-right"
+          data-mdb-toggle="animation"
+          data-mdb-animation-reset="true"
+          data-mdb-animation-start="onScroll"
+          data-mdb-animation-on-scroll="repeat"
+          class="fas fa-3x fa-shipping-fast text-white"
+        ></i>
+        <h3 class="mt-3 text-white">Welcome</h3>
+        <p class="white-text">
+          You are 30 seconds away from compleating your order!
+        </p>
+      </div>
+      <div class="text-center">
+        <button
+          type="submit"
+          data-mdb-button-init
+          data-mdb-ripple-init
+          class="btn btn-white rounded-pill back-button"
+        >
+          Go back
+        </button>
+      </div>
+    </div>
+    <div class="col-md-9 justify-content-center">
+      <div class="card card-custom pb-4">
+        <div class="card-body mt-0 mx-5">
+          <div class="text-center mb-3 pb-2 mt-3">
+            <h4 style="color: #495057">Payment Details</h4>
+          </div>
+
+          <form class="mb-0" method="POST" action="{% url 'process_order' %}">
+            {% csrf_token %}
+            <div class="row mb-4">
+              <div class="col">
+                <div data-mdb-input-init class="form-outline">
+                  {{billing_form.card_name}}
+                  <label class="form-label" for="form9Example1"
+                    >Cardholder's Name</label
+                  >
+                </div>
+              </div>
+              <div class="col">
+                <div data-mdb-input-init class="form-outline">
+                  {{billing_form.card_number}}
+                  <label class="form-label" for="form9Example2"
+                    >Card Number</label
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="row mb-4">
+              <div class="col">
+                <div data-mdb-input-init class="form-outline">
+                  {{billing_form.card_exp_date}}
+                  <label class="form-label" for="form9Example3"
+                    >Expiration Date</label
+                  >
+                </div>
+              </div>
+              <div class="col">
+                <div data-mdb-input-init class="form-outline">
+                  {{billing_form.card_cvv}}
+                  <label class="form-label" for="form9Example4">CVV Code</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="float-end">
+              <!-- Submit button -->
+              <button
+                type="submit"
+                data-mdb-button-init
+                data-mdb-ripple-init
+                class="btn btn-primary rounded-pill"
+                style="background-color: #0062cc"
+              >
+                Place order
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%endblock%}
