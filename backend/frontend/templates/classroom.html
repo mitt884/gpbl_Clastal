@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section style="background-color: #eee">
+  <div class="container py-5">
+    <h2 class="text-center mb-4">Your Classroom</h2>
+    <div class="row justify-content-center">
+      {% if courses %}
+        {% for course, purchase_date in courses %}
+        <div class="col-md-8 col-lg-6 col-xl-4 mb-4">
+          <div class="card text-black">
+            {% if course.context_type == "file" %}
+            <img
+              class="card-img-top"
+              src="{{ course.context.url }}"
+              alt="..."
+            />
+              {% elif course.context_type == "youtube" %}
+              {% if course.youtube_embed_url %}
+            <iframe width="560" height="315" src="{{ course.youtube_embed_url }}" frameborder="0" allowfullscreen></iframe>
+            {% endif %}
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ course.name }}</h5>
+              <p class="text-muted mb-4">{{ course.description }}</p>
+              <p class="card-text">
+                {% if course.is_sale %}
+                <div class='d-flex justify-content-center small text-warning mb-2'>
+                  <div class='bi-star-fill'></div>
+                  &nbsp;&nbsp;&nbsp; Sales! &nbsp;&nbsp;&nbsp;
+                  <div class='bi-star-fill'></div>
+                </div>
+                <strike>${{ course.price }}</strike>
+                &nbsp;
+                ${{ course.sale_price }}
+                {% else %}
+                ${{ course.price }}
+                {% endif %}
+              </p>
+              <p class="text-muted">Purchased on: {{ purchase_date }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p class="text-center">You have not purchased any courses yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

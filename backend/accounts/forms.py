@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, SetPasswordForm
 from .models import User, User_Profile
+from courses.models import Courses, Tags
 
 class UserInfoForm(forms.ModelForm):
     phone = forms.CharField(label= "Phone Number:", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone'}), required=False)
@@ -46,3 +47,49 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'age', 'email', 'university', 'password1', 'password2', 'is_creator']
+
+class User_Add_Course_Form(forms.ModelForm):
+    new_tags = forms.CharField(
+        max_length=200,
+        required=False,
+        help_text='Enter a tag for the course',
+        widget=forms.TextInput(attrs={'class': 'form-control form-control-lg'})
+    )
+    
+    name = forms.CharField(
+        max_length=200,
+        widget=forms.TextInput(attrs={'class': 'form-control form-control-lg'})
+    )
+    price = forms.DecimalField(
+        decimal_places=2,
+        max_digits=6,
+        widget=forms.NumberInput(attrs={'class': 'form-control form-control-lg'})
+    )
+    description = forms.CharField(
+        max_length=300,
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'form-control form-control-lg'})
+    )
+    context = forms.FileField(
+        required=False,
+        widget=forms.ClearableFileInput(attrs={'class': 'form-control form-control-lg'})
+    )
+    youtube_url = forms.URLField(
+        required=False,
+        widget=forms.URLInput(attrs={'class': 'form-control form-control-lg'}),
+        help_text='Enter a YouTube URL if applicable.'
+    )
+    is_sale = forms.BooleanField(
+        required=False,
+        initial=False
+    )
+    sale_price = forms.DecimalField(
+        decimal_places=2,
+        max_digits=6,
+        required=False,
+        widget=forms.NumberInput(attrs={'class': 'form-control form-control-lg'})
+    )
+
+    class Meta:
+        model = Courses
+        fields = ['name', 'price', 'description', 'is_sale', 'sale_price', 'new_tags', 'context']

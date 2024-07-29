@@ -73,6 +73,21 @@
                 >
               </li>
               <div class="dropdown-divider"></div>
+              {% if user.is_creator %}
+
+              <li>
+                <a class="dropdown-item" href="{% url 'user_courses' %}"
+                  >Your Courses</a
+                >
+              </li>
+              <div class="dropdown-divider"></div>
+              {% endif %}
+              <li>
+                <a class="dropdown-item" href="{% url 'classroom' %}"
+                  >Classroom</a
+                >
+              </li>
+              <div class="dropdown-divider"></div>
               <li>
                 <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
               </li>

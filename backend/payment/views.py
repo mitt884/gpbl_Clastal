@@ -5,8 +5,8 @@ from .models import ShippingAddress
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from orders.models import Order, OrderItems
-from accounts.models import User
-from courses.models import Courses
+from accounts.models import User_Profile
+from django.utils import timezone
 # Create your views here.
 @login_required
 def process_order(request):
@@ -49,12 +49,25 @@ def process_order(request):
                     create_order_item = OrderItems(user=user,order_id=order_id, course_id=course_id, quantity=quantity, price=price)
                     create_order_item.save()
         
+         # Set the purchased_at field
+        OrderItems.objects.filter(order_id=order_id).update(purchased_at=timezone.now())
+        
+        # Credit the creator
+        creator = course.user
+        if creator and creator.is_creator:
+            creator.balance += (price * quantity)
+            creator.save()
         #Delete the cart
         for key in list(request.session.keys()):
             if key == "session_key":
                 #Delete the key
                 del request.session[key]
         messages.success(request, "Order Placed")
+        
+        
+        #Delete cart from db
+        current_user = User_Profile.objects.filter(user__id=request.user.id)
+        current_user.update(old_cart="")
         return redirect('home')
     else:
         messages.error(request, "Access Denied")

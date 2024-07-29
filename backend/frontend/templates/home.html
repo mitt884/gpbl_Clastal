@@ -29,13 +29,18 @@
                  <div class="badge bg-dark text-white position-absolute"
                  style="top: 0.5rem; right: 0.5rem">Now Sale</div>
                 <!-- Product image-->
-                  {% if course.context_type == "image" %}
+                  {% if course.context_type == "file" %}
                 <img
                   class="card-img-top"
                   src="{{ course.context.url }}"
                   alt="..."
                 />
-                  {% endif %}
+                  {% elif course.context_type == "youtube" %}
+
+                  {% if course.youtube_embed_url %}
+                <iframe width="560" height="315" src="{{ course.youtube_embed_url }}" frameborder="0" allowfullscreen></iframe>
+                {% endif %}
+              {% endif %}
                 <!-- Product details-->
                 <div class="card-body p-4">
                   <div class="text-center">

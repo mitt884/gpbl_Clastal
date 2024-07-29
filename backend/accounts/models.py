@@ -48,6 +48,8 @@ class User(AbstractBaseUser):
     password = models.CharField(max_length=1000)
     is_active = models.BooleanField(default=False)
     is_creator = models.BooleanField(default=False)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
     
     
     USERNAME_FIELD = 'email'
@@ -59,10 +61,12 @@ class User(AbstractBaseUser):
         return self.username
     
     def has_perm(self, perm, obj=None):
-        return self.is_superuser
+        if self.is_superuser:
+            return True
 
     def has_module_perms(self, app_label):
-        return self.is_superuser
+        if self.is_superuser:
+            return True
     
     @property
     def is_staff(self):
