@@ -1,3 +1,11 @@
-# Django==5.0.3
-Django==3.2.12
+Django==5.0.3
 django_embed_video==1.4.10
+gunicorn==22.0.0
+packaging==24.1
+Pillow==10.0.0
+psycog2==2.9.9
+sqlparse==0.4.4
+typing-extensions==4.7.1
+tzdata==2023.3
+whitenoise==6.6.0
+asgiref==3.7.2
