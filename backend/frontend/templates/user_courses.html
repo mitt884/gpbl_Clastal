@@ -1,61 +1,85 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block content %}
 <section style="background-color: #eee">
   <div class="container py-5">
-    <!-- Button to add a new course -->
-    <div class="text-center mb-4">
-      <a href="{{ add_course_url }}" class="btn btn-primary">Add New Course</a>
-    </div>
-
-    <div class="row justify-content-center">
-      {% for course in courses %}
-      <div class="col-md-8 col-lg-6 col-xl-4">
-        <div class="card text-black">
-          {% if course.context_type == "file" %}
-          <img
-            class="card-img-top"
-            src="{{ course.context.url }}"
-            alt="..."
-          />
-            {% elif course.context_type == "youtube" %}
-
-            {% if course.youtube_embed_url %}
-          <iframe width="560" height="315" src="{{ course.youtube_embed_url }}" frameborder="0" allowfullscreen></iframe>
-          {% endif %}
-          {% endif %}
-          <div class="card-body">
-            <div class="text-center">
-              <h5 class="card-title">{{ course.name }}</h5>
-              <p class="text-muted mb-4">{{ course.description }}</p>
-
-              {% if course.is_sale %}
-
-            <div class='d-flex justify-content-center small text-warning mb-2'>
-                <div class='bi-star-fill'></div>
-                &nbsp;&nbsp;&nbsp; Sales! &nbsp;&nbsp;&nbsp;
-                <div class='bi-star-fill'></div>
-            </div>
-              <!-- Product price-->
-            <strike>
-                ${{course.price}}
-            </strike>
-                &nbsp;
-                ${{course.sale_price}}
-                
-            {% else %}
-                ${{ course.price }}
-            {% endif %}
-            <br></br>
+    <div class="row">
+      <!-- Course List Section -->
+      <div class="col-md-8">
+        <!-- Button to add a new course -->
+        <div class="text-center mb-4">
+          <a href="{{ add_course_url }}" class="btn btn-primary">Add New Course</a>
         </div>
-            <form method="post" action="{% url 'delete_courses' course.id %}">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-danger">
-                Delete Course
-              </button>
-            </form>
+
+        <div class="row justify-content-center">
+          {% for course in courses %}
+          <div class="col-md-8 col-lg-6 col-xl-4">
+            <div class="card text-black">
+              {% if course.context_type == "file" %}
+                <img
+                  class="card-img-top"
+                  src="{{ course.context.url }}"
+                  alt="..."
+                />
+              {% endif %}
+              <div class="card-body">
+                <div class="text-center">
+                  <h5 class="card-title">{{ course.name }}</h5>
+                  <p class="text-muted mb-4">{{ course.intro }}</p>
+
+                  {% if course.is_sale %}
+                    <div class='d-flex justify-content-center small text-warning mb-2'>
+                      <div class='bi-star-fill'></div>
+                      &nbsp;&nbsp;&nbsp; Sales! &nbsp;&nbsp;&nbsp;
+                      <div class='bi-star-fill'></div>
+                    </div>
+                    <!-- Product price -->
+                    <strike>${{ course.price }}</strike>
+                    &nbsp;
+                    ${{ course.sale_price }}
+                  {% else %}
+                    ${{ course.price }}
+                  {% endif %}
+                  <br></br>
+                </div>
+                <!-- Display Tags -->
+                <div class="text-center">
+                  {% for tag in course.tags.all %}
+                  <span class="badge rounded-pill bg-primary text-white me-2 mb-2">
+                    {{ tag.name }}
+                  </span>
+                  {% endfor %}
+                </div>
+                <div class="d-flex mt-2">
+                  {% if request.user == course.user %}
+                    <a href="{% url 'modify_courses' course.id %}" class="btn btn-secondary me-2">
+                      Modify
+                    </a>
+                  {% endif %}
+                  <form method="post" action="{% url 'delete_courses' course.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                      Delete Course
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Creator Balance Section -->
+      <div class="col-md-4">
+        <div class="d-flex flex-column align-items-end">
+          <div class="card text-dark bg-light mb-4" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Your Income</h5>
+              <p class="card-text">${{ balance }}</p>
+            </div>
           </div>
         </div>
       </div>
-      {% endfor %}
     </div>
   </div>
 </section>

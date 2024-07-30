@@ -3,7 +3,8 @@ from accounts.models import User
 from mimetypes import guess_type
 from django.core.files.base import ContentFile
 from urllib.parse import urlparse, parse_qs
-from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
+from embed_video.fields import EmbedVideoField
 
 # Create your models here.
 class Tags(models.Model):
@@ -21,9 +22,9 @@ class Courses(models.Model):
     name =  models.CharField(max_length=200)
     price = models.DecimalField(default=0, decimal_places=2, max_digits=6)
     tags = models.ManyToManyField(Tags, blank=True)
+    intro = models.CharField(max_length=20, default='', blank=True, null=True)
     description = models.CharField(max_length=300, default='', blank=True, null=True)
     context = models.FileField(upload_to="uploads/", blank=True)
-    youtube_url = models.URLField(validators=[URLValidator()], blank=True, null=True)  
     #sale
     is_sale = models.BooleanField(default=False)
     sale_price = models.DecimalField(default=0, decimal_places=2, max_digits=6, blank=True, null=True)
@@ -32,25 +33,8 @@ class Courses(models.Model):
         return self.name
     
     def context_type(self):
-        """
-        Determines the type of the context: file or YouTube URL.
-        """
-        if self.youtube_url:
-            return 'youtube'
-        elif self.context:
+        if self.context:
             return 'file'
-        return None
-        
-    
-    @property
-    def youtube_embed_url(self):
-        """
-        Returns the YouTube embed URL if youtube_url is set.
-        """
-        if self.youtube_url:
-            video_id = parse_qs(urlparse(self.youtube_url).query).get('v', [None])[0]
-            if video_id:
-                return f'https://www.youtube.com/embed/{video_id}'
         return None
 
     

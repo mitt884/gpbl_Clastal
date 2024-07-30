@@ -65,6 +65,11 @@ class User_Add_Course_Form(forms.ModelForm):
         max_digits=6,
         widget=forms.NumberInput(attrs={'class': 'form-control form-control-lg'})
     )
+    intro = forms.CharField(
+        max_length=20,
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'form-control form-control-lg'})
+    )
     description = forms.CharField(
         max_length=300,
         required=False,
@@ -73,11 +78,6 @@ class User_Add_Course_Form(forms.ModelForm):
     context = forms.FileField(
         required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'form-control form-control-lg'})
-    )
-    youtube_url = forms.URLField(
-        required=False,
-        widget=forms.URLInput(attrs={'class': 'form-control form-control-lg'}),
-        help_text='Enter a YouTube URL if applicable.'
     )
     is_sale = forms.BooleanField(
         required=False,
@@ -92,4 +92,4 @@ class User_Add_Course_Form(forms.ModelForm):
 
     class Meta:
         model = Courses
-        fields = ['name', 'price', 'description', 'is_sale', 'sale_price', 'new_tags', 'context']
+        fields = ['name', 'price', 'intro', 'description', 'is_sale', 'sale_price', 'new_tags', 'context']

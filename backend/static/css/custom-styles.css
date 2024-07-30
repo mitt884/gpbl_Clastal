@@ -103,10 +103,6 @@ body {
   color: #dc143c;
 }
 
-.flex-grow-1 {
-  flex: 1;
-}
-
 html {
   height: 100%;
   margin: 0;
@@ -114,11 +110,15 @@ html {
 
 .h-custom {
   min-height: calc(100vh - 120px); /* Adjust the height as per your footer height */
+  padding-bottom: 80px; /* Add padding to ensure content doesn't overlap with footer */
 }
 
-form.overflow-auto {
-  max-height: 100vh;
-  overflow-y: auto;
+footer {
+  height: 80px; /* Set the height of your footer */
+}
+
+.flex-grow-1 {
+  flex: 1;
 }
 
 /*# sourceMappingURL=custom-styles.css.map */

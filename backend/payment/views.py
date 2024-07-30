@@ -15,7 +15,7 @@ def process_order(request):
         cart_courses = cart.get_courses
         total = cart.cart_total()
    
-        #Get billing info from last page
+        #Get billing info from last page(This is for real billing)
         payment_form = PaymentForm(request.POST or None)
         #Get Shipping Session Data
         my_shipping = request.session.get('my_shipping')
@@ -57,17 +57,22 @@ def process_order(request):
         if creator and creator.is_creator:
             creator.balance += (price * quantity)
             creator.save()
+            
         #Delete the cart
         for key in list(request.session.keys()):
             if key == "session_key":
                 #Delete the key
                 del request.session[key]
-        messages.success(request, "Order Placed")
-        
-        
+                
         #Delete cart from db
-        current_user = User_Profile.objects.filter(user__id=request.user.id)
-        current_user.update(old_cart="")
+        cart.clear()
+        # Update user profile
+        if request.user.is_authenticated:
+            current_user_profile = User_Profile.objects.get(user=request.user)
+            current_user_profile.old_cart = ""
+            current_user_profile.save()
+                    
+        messages.success(request, "Order Placed")
         return redirect('home')
     else:
         messages.error(request, "Access Denied")

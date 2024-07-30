@@ -166,6 +166,8 @@ def add_courses(request):
                 for tag_name in tag_names:
                     tag, created = Tags.objects.get_or_create(name=tag_name)
                     course.tags.add(tag)
+                    
+            add_course_form.save_m2m()
             messages.success(request, ("You have added a course!!"))
             return redirect('home')
     else:
@@ -196,3 +198,18 @@ def user_courses(request):
     add_course_url = reverse('add_courses')
     balance = request.user.balance
     return render(request, 'user_courses.html', {'courses': courses, 'add_course_url': add_course_url, 'balance': balance})
+
+
+def modify_courses(request, course_id):
+    if request.user.is_creator:
+        course = get_object_or_404(Courses, id=course_id)
+    
+    if request.method == 'POST':
+        add_course_form_modify = User_Add_Course_Form(request.POST, request.FILES, instance=course)
+        if add_course_form_modify.is_valid():
+            add_course_form_modify.save()
+            return redirect('user_courses')
+    else:
+        add_course_form_modify = User_Add_Course_Form(instance=course)
+    
+    return render(request, 'modify_course.html', {'add_course_form_modify': add_course_form_modify, 'course': course})

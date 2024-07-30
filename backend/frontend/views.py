@@ -14,7 +14,7 @@ def search(request):
     if request.method == 'POST':
         searched = request.POST['searched']
         #Query the courses
-        searched = Courses.objects.filter(Q(name__icontains=searched) | Q(description__icontains=searched))
+        searched = Courses.objects.filter(Q(name__icontains=searched)| Q(intro__icontains=searched))
         
         if not searched:
             messages.success(request, ("No courses found"))

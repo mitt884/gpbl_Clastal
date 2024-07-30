@@ -22,18 +22,17 @@
         <p class="mb-0">あ な た の 知 り た い 、 教 え た い を か な え</p>
       </div>
       <div class="col-md-6 col-lg-6 col-xl-4 offset-xl-1">
-        <h4 class="mb-5 text-uppercase">Add New Course</h4>
+        <h5 class="mb-5 text-uppercase">Modify The Course</h5>
         <form
-          method="POST"
-          action="{% url 'add_courses' %}"
+          method="post"
+          action="{% url 'modify_courses' course.id %}"
           enctype="multipart/form-data"
-          class="overflow-auto"
         >
           {% csrf_token %}
-          <div class="form-group">{{ add_course_form.as_p }}</div>
+          <div class="form-group">{{ add_course_form_modify.as_p }}</div>
           <div class="d-flex justify-content-end">
             <button type="submit" class="btn btn-warning gradient-custom-4">
-              Add new course
+              Save Changes
             </button>
           </div>
         </form>

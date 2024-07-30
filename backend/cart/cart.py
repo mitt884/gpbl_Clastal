@@ -78,3 +78,10 @@ class Cart():
                     else:
                         total += course.price * quantity
         return total
+    
+    def clear(self):
+        """Clear the cart."""
+        self.cart = {}
+        self.session['cart'] = {}
+        self.session.modified = True
+        self._save_to_user_profile()
