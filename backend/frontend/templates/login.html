@@ -22,27 +22,30 @@
         <form method="POST" action="{% url 'login' %}">
           {% csrf_token %}
           <input type="hidden" name="next" value="{{ request.GET.next }}" />
-          <div class="divider d-flex align-items-center my-4"></div>
           <!-- Email input -->
           <div data-mdb-input-init class="form-outline mb-4">
-            <input
+            
+            <label class="form-label">メールアドレス:</label>
+            <span class="required">*<span>
+              <input
               type="email"
               name="email"
               class="form-control form-control-lg"
               placeholder="メールアドレス入力します："
             />
-            <label class="form-label">メールアドレス</label>
           </div>
 
           <!-- Password input -->
           <div data-mdb-input-init class="form-outline mb-3">
-            <input
+            
+            <label class="form-label" for="form3Example4">パスワード:</label>
+            <span class="required">*<span>
+              <input
               type="password"
               name="password"
               class="form-control form-control-lg"
               placeholder="パスワード入力します："
             />
-            <label class="form-label" for="form3Example4">パスワード</label>
           </div>
 
           <div class="d-flex justify-content-between align-items-center">

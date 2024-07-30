@@ -45,7 +45,6 @@
             placeholder="Search For Courses"
             name="searched"
           />
-          <span class="input-group-text"><i class="fa fa-microphone"></i></span>
         </form>
 
         {% if user.is_authenticated %}
@@ -70,6 +69,21 @@
               <li>
                 <a class="dropdown-item" href="{% url 'update_info' %}"
                   >User Info</a
+                >
+              </li>
+              <div class="dropdown-divider"></div>
+              {% if user.is_creator %}
+
+              <li>
+                <a class="dropdown-item" href="{% url 'user_courses' %}"
+                  >Your Courses</a
+                >
+              </li>
+              <div class="dropdown-divider"></div>
+              {% endif %}
+              <li>
+                <a class="dropdown-item" href="{% url 'classroom' %}"
+                  >Classroom</a
                 >
               </li>
               <div class="dropdown-divider"></div>

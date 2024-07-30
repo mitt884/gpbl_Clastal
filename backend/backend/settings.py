@@ -26,8 +26,8 @@ SECRET_KEY = 'django-insecure-c(64eh$cjfo&4jg_%7uzjwd_ymlwpjlm=op*toisq0w0qb=cir
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['gpblclastal-production.up.railway.app', 'https://gpblclastal-production.up.railway.app']
-CSRF_TRUSTED_ORIGINS = ['gpblclastal-production.up.railway.app', 'https://gpblclastal-production.up.railway.app']
+ALLOWED_HOSTS = []
+
 
 
 # Application definition
@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'frontend',
     'payment',
     'orders',
-    'whitenoise.runserver_nostatic'
 ]
 
 MIDDLEWARE = [
@@ -59,7 +58,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -137,9 +135,7 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-#WhiteNoise static
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATIC_ROOT = BASE_DIR /  'staticfiles'
+
 
 
 MEDIA_URL = 'media/'

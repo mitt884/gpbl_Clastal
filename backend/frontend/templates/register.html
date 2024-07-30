@@ -24,22 +24,28 @@
         <form method="POST" action="{% url 'register' %}">
           {% csrf_token %}
           <div class="form-group mb-4">
-            {{ form.username.label_tag }} {{ form.username }}
+            {{ form.username.label_tag }}
+            <span class="required">*<span> {{ form.username }}
           </div>
           <div class="form-group mb-4">
-            {{ form.age.label_tag }} {{ form.age }}
+            {{ form.age.label_tag }}
+            <span class="required">*<span> {{ form.age }}
           </div>
           <div class="form-group mb-4">
-            {{ form.email.label_tag }} {{ form.email }}
+            {{ form.email.label_tag }}
+            <span class="required">*<span> {{ form.email }}
           </div>
           <div class="form-group mb-4">
-            {{ form.university.label_tag }} {{ form.university }}
+            {{ form.university.label_tag }}
+            <span class="required">*<span> {{ form.university }}
           </div>
           <div class="form-group mb-4">
-            {{ form.password1.label_tag }} {{ form.password1 }}
+            {{ form.password1.label_tag }}
+            <span class="required">*<span> {{ form.password1 }}
           </div>
           <div class="form-group mb-4">
-            {{ form.password2.label_tag }} {{ form.password2 }}
+            {{ form.password2.label_tag }}
+            <span class="required">*<span> {{ form.password2 }}
           </div>
           <div class="form-check mb-4">
             {{ form.is_creator }} {{ form.is_creator.label_tag }}

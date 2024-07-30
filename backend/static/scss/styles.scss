@@ -8,6 +8,10 @@
 }
 body {
   background: #d1d5db;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
 }
 
 .height {
@@ -100,4 +104,26 @@ body {
     rgba(132, 250, 176, 1),
     rgba(143, 211, 244, 1)
   );
+}
+.required {
+  color: #dc143c;
+}
+
+html {
+  height: 100%;
+  margin: 0;
+}
+.h-custom {
+  min-height: calc(
+    100vh - 120px
+  ); /* Adjust the height as per your footer height */
+  padding-bottom: 80px; /* Add padding to ensure content doesn't overlap with footer */
+}
+
+footer {
+  height: 80px; /* Set the height of your footer */
+}
+
+.flex-grow-1 {
+  flex: 1;
 }

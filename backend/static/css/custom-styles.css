@@ -10,6 +10,10 @@
 
 body {
   background: #d1d5db;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
 }
 
 .height {
@@ -93,6 +97,28 @@ body {
   background: -webkit-linear-gradient(to right, rgb(132, 250, 176), rgb(143, 211, 244));
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background: linear-gradient(to right, rgb(132, 250, 176), rgb(143, 211, 244));
+}
+
+.required {
+  color: #dc143c;
+}
+
+html {
+  height: 100%;
+  margin: 0;
+}
+
+.h-custom {
+  min-height: calc(100vh - 120px); /* Adjust the height as per your footer height */
+  padding-bottom: 80px; /* Add padding to ensure content doesn't overlap with footer */
+}
+
+footer {
+  height: 80px; /* Set the height of your footer */
+}
+
+.flex-grow-1 {
+  flex: 1;
 }
 
 /*# sourceMappingURL=custom-styles.css.map */

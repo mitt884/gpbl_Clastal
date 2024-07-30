@@ -35,6 +35,10 @@
           <div class="form-group mb-4">
             {{ user_form.university.label_tag }} {{ user_form.university }}
           </div>
+          <div class="form-group mb-4">
+            {{ user_form.is_creator }}
+            <label> Check the box to become a creator!</label>
+          </div>
           <div class="d-flex justify-content-end">
             <a href="{% url 'update_password' %}" class="btn btn-secondary">
               Update Password

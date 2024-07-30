@@ -53,7 +53,8 @@
         aria-label="Close"
       ></button>
     </div>
-    {% endfor %} {% endif %} {% block content %} {% endblock %}
+    {% endfor %} {% endif %}
+    <div class="flex-grow-1">{% block content %} {% endblock %}</div>
     <!-- Footer-->
     <footer class="py-5 bg-dark mt-auto">
       <div class="container">

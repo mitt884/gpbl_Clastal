@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import User_Profile
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
@@ -6,12 +6,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
-from .forms import UserRegisterForm, UserUpdateForm, ChangeUserPassword, UserInfoForm
+from .forms import UserRegisterForm, UserUpdateForm, ChangeUserPassword, UserInfoForm, User_Add_Course_Form
 from django.contrib.auth import logout as auth_logout
 import json
 from cart.cart import Cart
 from payment.forms import ShippingForm
 from payment.models import ShippingAddress
+from courses.models import Courses, Tags
+from django.urls import reverse
 
 def register_user(request):
     if request.method == "POST":
@@ -144,3 +146,70 @@ def update_info(request):
         shipping_form = ShippingForm(instance=shipping_user)
 
     return render(request, 'update_info.html', {'form': form, 'shipping_form': shipping_form})
+
+@login_required
+def add_courses(request):
+    if not request.user.is_creator:
+        return redirect('home')
+    
+    
+    if request.method == "POST":
+        add_course_form = User_Add_Course_Form(request.POST, request.FILES)
+        if add_course_form.is_valid():
+            course = add_course_form.save(commit=False)
+            course.user = request.user
+            course.save()
+            #Handle new custom tag:
+            new_tags = add_course_form.cleaned_data['new_tags']
+            if new_tags:
+                tag_names = [tag.strip() for tag in new_tags.split(',')]
+                for tag_name in tag_names:
+                    tag, created = Tags.objects.get_or_create(name=tag_name)
+                    course.tags.add(tag)
+                    
+            add_course_form.save_m2m()
+            messages.success(request, ("You have added a course!!"))
+            return redirect('home')
+    else:
+        add_course_form = User_Add_Course_Form()
+        return render(request, 'add_courses.html', {'add_course_form': add_course_form})
+    
+@login_required
+def delete_courses(request, course_id):
+    if request.user.is_creator:
+        course = get_object_or_404(Courses, id=course_id)
+        
+    if course.user != request.user:
+        messages.error(request, "You are not allowed to delete this course!!")
+        
+    if course.context:
+        course.context.delete(save=False) #delete file from medie/upload when deleted
+    
+    course.delete()
+    messages.success(request, "Course deleted successfully!")
+    return redirect('home')
+        
+@login_required
+def user_courses(request):
+    if not request.user.is_creator:
+        return redirect('home')
+    
+    courses = Courses.objects.filter(user=request.user)
+    add_course_url = reverse('add_courses')
+    balance = request.user.balance
+    return render(request, 'user_courses.html', {'courses': courses, 'add_course_url': add_course_url, 'balance': balance})
+
+
+def modify_courses(request, course_id):
+    if request.user.is_creator:
+        course = get_object_or_404(Courses, id=course_id)
+    
+    if request.method == 'POST':
+        add_course_form_modify = User_Add_Course_Form(request.POST, request.FILES, instance=course)
+        if add_course_form_modify.is_valid():
+            add_course_form_modify.save()
+            return redirect('user_courses')
+    else:
+        add_course_form_modify = User_Add_Course_Form(instance=course)
+    
+    return render(request, 'modify_course.html', {'add_course_form_modify': add_course_form_modify, 'course': course})

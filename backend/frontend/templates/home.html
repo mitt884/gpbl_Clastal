@@ -29,13 +29,14 @@
                  <div class="badge bg-dark text-white position-absolute"
                  style="top: 0.5rem; right: 0.5rem">Now Sale</div>
                 <!-- Product image-->
-                  {% if course.context_type == "image" %}
+                  {% if course.context_type == "file" %}
                 <img
                   class="card-img-top"
                   src="{{ course.context.url }}"
                   alt="..."
                 />
-                  {% endif %}
+              
+              {% endif %}
                 <!-- Product details-->
                 <div class="card-body p-4">
                   <div class="text-center">
@@ -72,13 +73,14 @@
           <div class="col mb-5">
             <div class="card h-100">
               <!-- Product image-->
-                {% if course.context_type == "image" %}
+              {% if course.context_type == "file" %}
               <img
                 class="card-img-top"
                 src="{{ course.context.url }}"
                 alt="..."
               />
-                {% endif %}
+            
+            {% endif %}
               <!-- Product details-->
               <div class="card-body p-4">
                 <div class="text-center">
@@ -87,9 +89,16 @@
                   <!-- Product price-->
                   ${{course.price}}
                   <br />
-                  {{course.description}}
+                  {{course.intro}}
                 </div>
               </div>
+              <div class="mt-3 mb-3 text-center">
+                {% for tag in course.tags.all %}
+                <span class="btn rounded-pill bg-primary text-white me-2 mb-2">
+                  {{ tag.name }}
+                </span>
+                {% endfor %}
+                </div>
               <!-- Product actions-->
               <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                 <div class="text-center">

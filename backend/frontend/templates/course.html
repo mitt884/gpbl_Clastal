@@ -6,6 +6,7 @@
       <div class="col-md-8 col-lg-6 col-xl-4">
         <div class="card text-black">
           <img src="{{ course.context.url }}" />
+
           <div class="card-body">
             <div class="text-center">
               <h5 class="card-title">{{ course.name }}</h5>
@@ -29,10 +30,23 @@
                 ${{ course.price }}
             {% endif %}
             <br></br>
-        </div>
-            <button type="button" value="{{ course.id }}" class="btn btn-danger" id="add-cart"> Add to cart </button>
             
+            <!-- Display tags -->
+              <div class="mt-3 mb-3 text-center">
+              {% for tag in course.tags.all %}
+              <span class="btn rounded-pill bg-primary text-white me-2 mb-2">
+                {{ tag.name }}
+              </span>
+              {% endfor %}
+              </div>
             </div>
+            {% if request.user == course.user %}
+              <a href="{% url 'modify_courses' course.id %}" class="btn btn-secondary">Modify</a>
+            {% elif course.id in purchased_courses %} 
+              <div class="btn btn-outline-dark mt-auto">Has Purchased</div>
+              {% else %}
+              <button type="button" value="{{ course.id }}" class="btn btn-danger" id="add-cart">Add to cart</button>
+            {% endif %}
           </div>
         </div>
       </div>

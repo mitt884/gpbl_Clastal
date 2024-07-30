@@ -5,8 +5,8 @@ from .models import ShippingAddress
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from orders.models import Order, OrderItems
-from accounts.models import User
-from courses.models import Courses
+from accounts.models import User_Profile
+from django.utils import timezone
 # Create your views here.
 @login_required
 def process_order(request):
@@ -15,7 +15,7 @@ def process_order(request):
         cart_courses = cart.get_courses
         total = cart.cart_total()
    
-        #Get billing info from last page
+        #Get billing info from last page(This is for real billing)
         payment_form = PaymentForm(request.POST or None)
         #Get Shipping Session Data
         my_shipping = request.session.get('my_shipping')
@@ -49,11 +49,29 @@ def process_order(request):
                     create_order_item = OrderItems(user=user,order_id=order_id, course_id=course_id, quantity=quantity, price=price)
                     create_order_item.save()
         
+         # Set the purchased_at field
+        OrderItems.objects.filter(order_id=order_id).update(purchased_at=timezone.now())
+        
+        # Credit the creator
+        creator = course.user
+        if creator and creator.is_creator:
+            creator.balance += (price * quantity)
+            creator.save()
+            
         #Delete the cart
         for key in list(request.session.keys()):
             if key == "session_key":
                 #Delete the key
                 del request.session[key]
+                
+        #Delete cart from db
+        cart.clear()
+        # Update user profile
+        if request.user.is_authenticated:
+            current_user_profile = User_Profile.objects.get(user=request.user)
+            current_user_profile.old_cart = ""
+            current_user_profile.save()
+                    
         messages.success(request, "Order Placed")
         return redirect('home')
     else:
