@@ -9,4 +9,4 @@ typing-extensions==4.7.1
 tzdata==2023.3
 whitenoise==6.6.0
 asgiref==3.7.2
-django-cors-headers==4.2.2
+django-cors-headers==4.2.0
