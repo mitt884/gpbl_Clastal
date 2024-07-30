@@ -10,3 +10,4 @@ tzdata==2023.3
 whitenoise==6.6.0
 asgiref==3.7.2
 django-cors-headers==4.2.0
+djangorestframework==3.15.1
