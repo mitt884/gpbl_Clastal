@@ -35,8 +35,6 @@
                   src="{{ course.context.url }}"
                   alt="..."
                 />
-              
-              {% endif %}
                 <!-- Product details-->
                 <div class="card-body p-4">
                   <div class="text-center">
@@ -55,8 +53,15 @@
                       &nbsp;
                       ${{course.sale_price}}
                     <br />
-                    {{course.description}}
-
+                    {{course.intro}}
+                    <div class="mt-3 mb-3 text-center">
+                      {% for tag in course.tags.all %}
+                      <span class="btn rounded-pill bg-primary text-white me-2 mb-2">
+                        {{ tag.name }}
+                      </span>
+                      {% endfor %}
+                      </div>
+                    {% endif %}
                   </div>
                 </div>
                 <!-- Product actions-->

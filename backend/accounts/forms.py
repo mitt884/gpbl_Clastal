@@ -79,6 +79,10 @@ class User_Add_Course_Form(forms.ModelForm):
         required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'form-control form-control-lg'})
     )
+    youtube_url = forms.URLField(
+        required=False,
+        widget=forms.URLInput(attrs={'class': 'form-control form-control-lg'})
+    )
     is_sale = forms.BooleanField(
         required=False,
         initial=False
@@ -92,4 +96,4 @@ class User_Add_Course_Form(forms.ModelForm):
 
     class Meta:
         model = Courses
-        fields = ['name', 'price', 'intro', 'description', 'is_sale', 'sale_price', 'new_tags', 'context']
+        fields = ['name', 'price', 'intro', 'description', 'is_sale', 'sale_price', 'new_tags', 'context', 'youtube_url']

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<section style="background-color: #eee">
+  <div class="container py-5">
+    <h2 class="text-center mb-4">{{ course.name }}</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-8 col-xl-8 mb-4">
+        <div class="card text-black">
+          <div class="card-body">
+            {% if course.youtube_url %}
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe
+                class="embed-responsive-item"
+                src="https://www.youtube.com/embed/{{ course.youtube_url|slice:"32:" }}"
+                allowfullscreen
+                width="100%" 
+                height="500"
+              ></iframe>
+            </div>
+            {% else %}
+            <p>No video content available for this course.</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
