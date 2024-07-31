@@ -213,3 +213,4 @@ def modify_courses(request, course_id):
         add_course_form_modify = User_Add_Course_Form(instance=course)
     
     return render(request, 'modify_course.html', {'add_course_form_modify': add_course_form_modify, 'course': course})
+

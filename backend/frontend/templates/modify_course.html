@@ -27,6 +27,8 @@
           method="post"
           action="{% url 'modify_courses' course.id %}"
           enctype="multipart/form-data"
+          class="overflow-auto"
+          style="max-height: 80vh"
         >
           {% csrf_token %}
           <div class="form-group">{{ add_course_form_modify.as_p }}</div>

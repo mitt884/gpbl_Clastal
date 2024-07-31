@@ -18,6 +18,11 @@
               ${{course.price}} {% endif %}
             </p>
             <p class="text-muted">Purchased on: {{ purchase_date }}</p>
+            <a
+              href="{% url 'course_content' course.pk %}"
+              class="btn btn-primary"
+              >Content</a
+            >
           </div>
         </div>
       </div>

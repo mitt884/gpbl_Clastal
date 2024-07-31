@@ -25,6 +25,7 @@ class Courses(models.Model):
     intro = models.CharField(max_length=20, default='', blank=True, null=True)
     description = models.CharField(max_length=300, default='', blank=True, null=True)
     context = models.FileField(upload_to="uploads/", blank=True)
+    youtube_url = models.URLField(max_length=200, blank=True, null=True) 
     #sale
     is_sale = models.BooleanField(default=False)
     sale_price = models.DecimalField(default=0, decimal_places=2, max_digits=6, blank=True, null=True)

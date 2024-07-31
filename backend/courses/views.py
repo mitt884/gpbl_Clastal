@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Courses,Tags
 from django.contrib import messages
 from orders.models import Order, OrderItems
@@ -34,3 +34,14 @@ def classroom(request):
     courses = [(item.course, item.purchased_at) for item in order_items]
     
     return render(request, 'classroom.html', {'courses': courses})
+
+
+def course_content(request, pk):
+    course = get_object_or_404(Courses, id=pk)
+    if request.user.is_authenticated:
+        # Check if the user has purchased the course
+        purchased = OrderItems.objects.filter(user=request.user, course=course).exists()
+        if not purchased:
+            return redirect('classroom')  # Redirect if the course is not purchased
+
+    return render(request, 'course_content.html', {'course': course})

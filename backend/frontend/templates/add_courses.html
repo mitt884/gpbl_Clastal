@@ -28,6 +28,7 @@
           action="{% url 'add_courses' %}"
           enctype="multipart/form-data"
           class="overflow-auto"
+          style="max-height: 80vh"
         >
           {% csrf_token %}
           <div class="form-group">{{ add_course_form.as_p }}</div>
